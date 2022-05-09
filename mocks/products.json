@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "product": "Nike Shoes",
+    "price": "12.33"
+  },
+  {
+    "id": 2,
+    "product": "MacBook Pro",
+    "price": "11231.12"
+  },
+  {
+    "id": 1,
+    "product": "iPad Pro",
+    "price": "7023"
+  }
+]
