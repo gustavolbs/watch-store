@@ -133,5 +133,5 @@
 export default {
   name: 'DefaultLayout',
   // components: { Cart },
-}
+};
 </script>
