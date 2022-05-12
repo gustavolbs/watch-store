@@ -15,8 +15,6 @@ module.exports = {
     '<rootDir>/layouts/**/*.{vue,js}',
     '<rootDir>/managers/**/*.{vue,js}',
     '<rootDir>/pages/**/*.{vue,js}',
-    '<rootDir>/state/**/*.{vue,js}',
-    '<rootDir>/state/**/*.{vue,js}',
     '!<rootDir>/node_modules',
   ],
   testEnvironment: 'jsdom',
