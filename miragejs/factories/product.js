@@ -38,7 +38,7 @@ export default {
       return faker.fake('{{commerce.price}}');
     },
     image() {
-      return images[randomNumber(10)];
+      return images[randomNumber(16)];
     },
   }),
 };
