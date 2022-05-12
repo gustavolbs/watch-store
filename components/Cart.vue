@@ -52,6 +52,7 @@
 
 <script>
 import CartItem from '@/components/CartItem';
+
 export default {
   name: 'CartComponent',
   components: { CartItem },
