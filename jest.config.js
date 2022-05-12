@@ -11,8 +11,13 @@ module.exports = {
   },
   collectCoverage: false,
   collectCoverageFrom: [
-    '<rootDir>/components/**/*.vue',
-    '<rootDir>/pages/**/*.vue',
+    '<rootDir>/components/**/*.{vue,js}',
+    '<rootDir>/layouts/**/*.{vue,js}',
+    '<rootDir>/managers/**/*.{vue,js}',
+    '<rootDir>/pages/**/*.{vue,js}',
+    '<rootDir>/state/**/*.{vue,js}',
+    '<rootDir>/state/**/*.{vue,js}',
+    '!<rootDir>/node_modules',
   ],
   testEnvironment: 'jsdom',
 };
