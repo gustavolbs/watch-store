@@ -33,6 +33,7 @@
           <div class="flex items-center justify-end w-full">
             <button
               class="text-gray-600 focus:outline-none mx-4 sm:mx-0"
+              data-testid="toggle-button"
               @click="toggleCart"
             >
               <svg
@@ -114,22 +115,25 @@
 
 <script>
 import Cart from '@/components/Cart';
-import { cartState } from '@/state';
 
 export default {
   name: 'DefaultLayout',
   components: { Cart },
   computed: {
     isCartOpen() {
-      return cartState.open;
+      return this.$cart.getState().open;
     },
     products() {
-      return cartState.items;
+      return this.$cart.getState().items;
     },
   },
   methods: {
     toggleCart() {
-      cartState.open = !cartState.open;
+      if (this.$cart.getState().open) {
+        this.$cart.close();
+      } else {
+        this.$cart.open();
+      }
     },
   },
 };

@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import ProductCard from '@/components/ProductCard';
 import { makeServer } from '@/miragejs/server';
-import { cartState } from '@/state';
+import { CartManager } from '@/managers/CartManager';
 
 const mountProductCard = (server) => {
   const product = server.create('product', {
@@ -10,14 +10,20 @@ const mountProductCard = (server) => {
     image:
       'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
   });
-  return {
-    wrapper: mount(ProductCard, {
-      propsData: {
-        product,
-      },
-    }),
-    product,
-  };
+
+  const cartManager = new CartManager();
+
+  const wrapper = mount(ProductCard, {
+    propsData: {
+      product,
+    },
+    mocks: {
+      $cart: cartManager,
+    },
+  });
+
+  cartManager.clearCart();
+  return { wrapper, product, cartManager };
 };
 
 describe('ProductCard - unit', () => {
@@ -25,7 +31,6 @@ describe('ProductCard - unit', () => {
 
   beforeEach(() => {
     server = makeServer({ environment: 'test' });
-    cartState.items = [];
   });
 
   afterEach(() => {
@@ -47,21 +52,28 @@ describe('ProductCard - unit', () => {
   });
 
   it('should add item to cartState on button click', async () => {
-    const { wrapper, product } = mountProductCard(server);
+    const { wrapper, product, cartManager } = mountProductCard(server);
+    const spyOpen = jest.spyOn(cartManager, 'open');
+    const spyAdd = jest.spyOn(cartManager, 'addProduct');
 
     await wrapper.find('button').trigger('click');
 
-    expect(cartState.items).toHaveLength(1);
-    expect(cartState.items).toEqual([product]);
+    expect(spyOpen).toHaveBeenCalledTimes(1);
+    expect(spyAdd).toHaveBeenCalledTimes(1);
+    expect(spyAdd).toHaveBeenCalledWith(product);
+    expect(cartManager.getState().items).toHaveLength(1);
+    expect(cartManager.getState().items).toEqual([product]);
   });
 
   it('should ensure product is not added to cart twice', async () => {
-    const { wrapper, product } = mountProductCard(server);
+    const { wrapper, product, cartManager } = mountProductCard(server);
+    const spyAdd = jest.spyOn(cartManager, 'addProduct');
 
     await wrapper.find('button').trigger('click');
     await wrapper.find('button').trigger('click');
 
-    expect(cartState.items).toHaveLength(1);
-    expect(cartState.items).toEqual([product]);
+    expect(spyAdd).toHaveBeenCalledTimes(2);
+    expect(cartManager.getState().items).toHaveLength(1);
+    expect(cartManager.getState().items).toEqual([product]);
   });
 });

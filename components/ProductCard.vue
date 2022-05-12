@@ -31,8 +31,6 @@
 </template>
 
 <script>
-import { cartState } from '@/state';
-
 export default {
   name: 'ProductCard',
   props: {
@@ -43,10 +41,8 @@ export default {
   },
   methods: {
     addToCart() {
-      if (!cartState.items.includes(this.product)) {
-        cartState.open = true;
-        cartState.items.push(this.product);
-      }
+      this.$cart.open();
+      this.$cart.addProduct(this.product);
     },
   },
 };
