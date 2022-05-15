@@ -8,7 +8,6 @@
         data-testid="total-quantity-label"
         >{{ quantityLabel }}</span
       >
-      >
       <div
         class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6"
       >
@@ -16,6 +15,7 @@
           v-for="product in list"
           :key="product.id"
           :product="product"
+          data-testid="product-card"
         />
       </div>
     </div>
@@ -47,10 +47,10 @@ export default {
       return this.products;
     },
     quantityLabel() {
-      const {
-        list: { length },
-      } = this;
-      return length === 1 ? `${length} Product` : `${length} Products`;
+      const { list } = this;
+      return length === 1
+        ? `${list?.length} Product`
+        : `${list?.length || 0} Products`;
     },
   },
   async created() {
