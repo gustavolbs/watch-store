@@ -48,7 +48,7 @@ export default {
     },
     quantityLabel() {
       const { list } = this;
-      return length === 1
+      return list?.length === 1
         ? `${list?.length} Product`
         : `${list?.length || 0} Products`;
     },
