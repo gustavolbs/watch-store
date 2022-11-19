@@ -119,14 +119,14 @@ describe('Cart - unit', () => {
   });
 
   it('should display an input type e-mail when there are items in the cart', () => {
-    const { wrapper } = mountCart();
+    const { wrapper } = mountCart(server);
     const input = wrapper.find('input[type="email"]');
 
     expect(input.exists()).toBe(true);
   });
 
   it('should hide the input type e-mail when there are NO items in the cart', async () => {
-    const { wrapper } = mountCart();
+    const { wrapper } = mountCart(server);
 
     wrapper.setProps({
       products: [],
@@ -140,7 +140,7 @@ describe('Cart - unit', () => {
   });
 
   it('should emit checkout event and send email when checkout button is clicked', async () => {
-    const { wrapper } = mountCart();
+    const { wrapper } = mountCart(server);
     const form = wrapper.find('[data-testid="checkout-form"]');
     const input = wrapper.find('input[type="email"]');
     const email = 'vedovelli@gmail.com';
@@ -157,7 +157,7 @@ describe('Cart - unit', () => {
   });
 
   it('should NOT emit checkout event when input email is empty', async () => {
-    const { wrapper } = mountCart();
+    const { wrapper } = mountCart(server);
     const button = wrapper.find('[data-testid="checkout-button"]');
 
     await button.trigger('click');
